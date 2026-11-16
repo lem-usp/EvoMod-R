@@ -18,5 +18,7 @@ Suggests:
     testthat (>= 0.2),
     foreach,
     doMC
+Encoding: UTF-8
 License: MIT + file LICENSE
-BugReports: https://github.com/lem-usp/Morphometrics/issues
+BugReports: https://github.com/lem-usp/EvoMod-R/issues
+Config/roxygen2/version: 8.1.1

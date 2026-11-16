@@ -1,0 +1,12 @@
+N_e = 60
+n.traits = 4
+n.loci = 10
+mu = 0.005000
+mu_B = 0.001000
+sigma = 0.200000
+v_e = 0.800000
+burn_out = 3
+stabilizing = 3
+selective = 4
+Delta theta = 0.050000 0.050000 0.000000 0.000000 
+seed = 104348812618618

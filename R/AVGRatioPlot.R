@@ -6,7 +6,8 @@
 AVGRatioPlot  <- function(pop.list, modules = FALSE, x.axis = 'selection.strength', x.label = 'Peak Movement Rate'){
   avg <- ldply(pop.list, function(x) AVGRatio(x$p.cor, x[[x.axis]]), .progress = 'text')
   if(modules){
-    m.avg = melt(avg[,-c(1, 3, 4, 7)], id.vars = c('hypothesis', 'Selection_Strength'))
+    m.avg = melt(avg[, c('hypothesis', 'AVG+', 'AVG-', 'Selection_Strength')],
+                 id.vars = c('hypothesis', 'Selection_Strength'))
     m.avg = filter(m.avg, (hypothesis == "Full Integration" & variable == "AVG-") |
                           (hypothesis == "module.1"         & variable == "AVG+") |
                           (hypothesis == "module.2"         & variable == "AVG+"))
@@ -29,9 +30,9 @@ AVGRatioPlot  <- function(pop.list, modules = FALSE, x.axis = 'selection.strengt
                                      "Between Modules")) + theme_bw()
   }
   else{
-    avg.full = avg[avg['hipothesis'] == "Full Integration",-3]
+    avg.full = avg[avg$hypothesis == "Full Integration", ]
     avg.full = ddply(avg.full, .(Selection_Strength), 
-                     function(x) {y <- x$Avg_Ratio 
+                     function(x) {y <- x[["AVG Ratio"]] 
                                   c(mean = mean(y), quantile(y, c(0.025, 0.975)))
                      })
     names(avg.full) = c('Selection_Strength', 'mean', 'ymin', 'ymax')
@@ -39,7 +40,7 @@ AVGRatioPlot  <- function(pop.list, modules = FALSE, x.axis = 'selection.strengt
                                     mean,
                                     group = Selection_Strength)) + 
       geom_point() + geom_errorbar(aes(ymax = ymax, ymin = ymin)) +
-      labs(x="Peak Movement Rate", y="AVG Ratio") + theme_bw()
+      labs(x=x.label, y="AVG Ratio") + theme_bw()
   }
   return(avg.plot)
 }
